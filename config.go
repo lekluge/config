@@ -3,14 +3,14 @@ package config
 import (
 	"bufio"
 	"bytes"
-	"fmt"
+	"errors"
 	"io/ioutil"
 	"strings"
 )
 
-const (
-	ErrDoesNotExist = "File does not exist"
-	ErrEmptyArray   = "Empty file array, make sure to SetFile first!"
+var (
+	ErrDoesNotExist = errors.New("File does not exist")
+	ErrEmptyArray   = errors.New("Empty file array, make sure to SetFile first!")
 )
 
 type (
@@ -35,14 +35,14 @@ func SetFile(f string) (Config, error) {
 	var err error
 	file, err := ioutil.ReadFile(f)
 	if err != nil {
-		return nil, fmt.Errorf(ErrDoesNotExist)
+		return nil, ErrDoesNotExist
 	}
 	return config{path: f, file: file}, nil
 }
 
 func (c config) Parse() (map[string]string, error) {
 	if c.file == nil {
-		return nil, fmt.Errorf(ErrEmptyArray)
+		return nil, ErrEmptyArray
 	}
 	r := bytes.NewReader(c.file)
 	scanner := bufio.NewScanner(r)
