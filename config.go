@@ -52,6 +52,10 @@ func (c config) Parse() (map[string]string, error) {
 			continue
 		}
 		spl := strings.Split(scanner.Text(), "=")
+		if len(spl) < 2 {
+			continue
+		}
+
 		for i := range spl {
 			spl[i] = strings.TrimSpace(spl[i])
 		}
