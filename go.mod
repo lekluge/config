@@ -1,3 +1,3 @@
-module github.com/l3lackShark/config
+module github.com/lekluge/config
 
 go 1.15
